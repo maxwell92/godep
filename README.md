@@ -4,7 +4,7 @@ Godep使用教程
 Godep是golang的一个第三方包管理工具,用于处理golang的包依赖关系以及构建过程的工具.
 
 
-###### 安装Godep(Mac OSX)
+#### 安装Godep(Mac OSX)
 ----------------------------------------------
 
 官方的说法是通过如下命令:
@@ -48,7 +48,7 @@ Use "godep help [command]" for more information about a command.
 
 打印上面的信息就说明godep安装成功了.
 
-###### 创建Golang项目
+#### 创建Golang项目
 ----------------------------------------------
 
 Godep需要将它所管理的项目放入版本仓库中,这是必要条件.所以,我们先在github创建一个golang项目,可以直接clone下来:
@@ -83,7 +83,7 @@ tree
 
 有兴趣可以看看main.go和external.go的实现,很简单,不在赘述.
 
-###### 使用godep
+#### 使用godep
 ----------------------------------------------
 
 设置GOPATH和GOBIN环境变量
@@ -185,7 +185,7 @@ tree
 11 directories, 8 files
 ```
 
-###### 致谢
+#### 致谢
 ----------------------------------------------
 
 本文转自[汪云飞记录本](http://wiselyman.iteye.com/blog/2171562),感谢作者!
