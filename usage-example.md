@@ -1,8 +1,36 @@
-#### 一个使用godep的例子
+##一个使用godep的例子##
 
 在README.md里面已经了解到了godep的基本概念，这里将通过一个简单的例子来说明godep的基本使用，这个例子用到了git以及golang，所以在开始之前，需要了解版本控制(VCS)的概念、git的基本使用以及golang包的概念。
 
-#准备#
+-----------
+
+##误区##
+之前对godep存在理解上的误区，现在知道了它主要用来管理golang开发所需要的*第三方包*，而在下面的例子里，被管理的本质上是自己开发的包，从内容上看，两者并无差异；从包管理的角度来看，两者还是有一定的差异：对于自有代码版本的控制，一定是有的，协作团队间会比较清楚；而对于第三方包，由于协作的团队都需要使用go get命令来获取，容易出现两个团队获取的版本不一致而带来的混乱。
+
+通过go get获取的包一般是存放在$GOPATH/src下。下面以github.com/gorilla/mux包为例，说明一下godep管理第三方包的情况：
+
+首先go get github.com/gorilla/mux下载这个包，并切换到该目录$GOPATH/src/github.com/gorilla/mux下。已经知道godep可以依赖于git，所以godep的相关操作一定是发生在拥有.git的路径下，mux路径刚好符合。此时运行godep save，会提示有个github.com/gorilla/context包找不到：
+
+![](http://7xiwbf.com1.z0.glb.clouddn.com/godepnotfound.png)
+
+可以通过grep github.com/gorilla/context * 发现是context_gorilla.go和context_gorilla_test.go需要这个包。这时需要使用godep get github.com/gorilla/context下载这个包，之后再次godep save，并通过ls -R可以查看目录结构：
+
+![](http://7xiwbf.com1.z0.glb.clouddn.com/godepls.png)
+
+通过cat命令查看Godeps/Godeps.json查看文件的内容为:
+
+![](http://7xiwbf.com1.z0.glb.clouddn.com/godepnew.png)
+
+这里将context视为mux包的第三方包进行了管理
+
+
+
+
+*July 25th Updated*
+
+-----------
+
+##准备##
 查看本地GOPATH的值：
 ![](http://7xiwbf.com1.z0.glb.clouddn.com/gopath.png)
 
@@ -48,7 +76,7 @@ func Bigger(a, b int) int {
 
 
 
-#添加版本记录#
+##添加版本记录##
 godep是版本控制工具，但它仍需要别的工具来支持，不采用会怎么样？这里采用git进行版本控制。git应该初始化哪个路径呢？
 
 不采用：
@@ -72,7 +100,7 @@ git应该初始化包路径为./src/lab，那么要先对这个路径git init; g
 
 这里要注意，godep save 后面跟的是要做版本控制的路径，什么都不写的话默认当前目录。
 
-#更新版本记录#
+##更新版本记录##
 
 我们对src/lab/foo.go进行一点修改，例如添加函数:
 
@@ -94,3 +122,4 @@ func Add(a, b int) int {
 
 ![](http://7xiwbf.com1.z0.glb.clouddn.com/updateerror.png)
 
+*July 21th Updated*
